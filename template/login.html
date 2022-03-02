@@ -140,14 +140,45 @@ input {
 	width: 50%;
 }
 
-
 .overlay-right {
 	right: 0;
 }
-
-
+h3 {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  font-size: 1.5em;
+  color: black;
+}
+h3:before {
+  content: "\25C0";
+  position: absolute;
+  left: -50px;
+  -webkit-animation: leftRight 2s linear infinite;
+  animation: leftRight 2s linear infinite;
+}
+h3:after {
+  content: "\25b6";
+  position: absolute;
+  right: -50px;
+  -webkit-animation: leftRight 2s linear infinite reverse;
+  animation: leftRight 2s linear infinite reverse;
+}
+@-webkit-keyframes leftRight {
+  0%    { -webkit-transform: translateX(0)}
+  25%   { -webkit-transform: translateX(-10px)}
+  75%   { -webkit-transform: translateX(10px)}
+  100%  { -webkit-transform: translateX(0)}
+}
+@keyframes leftRight {
+  0%    { transform: translateX(0)}
+  25%   { transform: translateX(-10px)}
+  75%   { transform: translateX(10px)}
+  100%  { transform: translateX(0)}
+}
 
 </style>
+ <h3> Current time in Coordinated Universal Time (UTC) {{ utc_dt }}</h3>
 	<div class="container" id="container">
 		<div class="form-container log-in-container">
 			<form action="#">
@@ -163,11 +194,12 @@ input {
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel overlay-right">
-					<h1>Student Tracker</h1>
+					<h2> ∾ • Student Tracker online Mcq Test.</h2>
 					<p>This MCQ test will assist students in their choice of field.</p>
 				</div>
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>

@@ -5,10 +5,52 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-	<title>Dashboard</title>
-
+	<title>View Questions</title>
 </head>
 <body>
+<style>
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em;
+    font-family: sans-serif;
+    min-width: 850px;
+    min-height:210px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    position:absolute;
+    top:150px;
+    left:380px;
+}
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+</style>
+
 <style>
 body {
   margin:0;
@@ -24,7 +66,7 @@ ul {
   background-color: #f1f1f1;
   position: absolute;
   left:10px;
-  height: 180%;
+  height: 99%;
   overflow: auto;
 }
 
@@ -89,18 +131,24 @@ button {
 
  }
 
+.cen{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position:absolute;
+  top: 50px;
+  left:590px;
+  }
 
-
-li a.active {
+li a.view {
   background-color: #04AA6D;
   color: white;
 }
 
-li a:hover:not(.active) {
+li a:hover:not(.view) {
   background-color: #555;
   color: white;
 }
-
 .center {
   display: flex;
   justify-content: center;
@@ -112,49 +160,6 @@ li a:hover:not(.active) {
   border: 2px solid white;
   background:#696969;
 
-}
-
-.centen{
-  display: flex;
-  justify-content: center;
-  height:220px;
-  width:944px;
-  position:absolute;
-  top: 863px;
-  left:325px;
-  border: 2px solid white;
-  background:#696969;
-}
-.cen{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position:absolute;
-  top: 50px;
-  left:590px;
-  }
-
-  .bottom{
-   display: flex;
-  justify-content: center;
-  align-items: center;
-  position:absolute;
-  color:white;
-  top: 950px;
-  left:493px;
-  font-size:20px;
-  }
-
-  .about{
-  display: flex;
-  justify-content: center;
-  height:714px;
-  font-size:20px;
-  width:932px;
-  position:absolute;
-  top: 149px;
-  left:350px;
-  border: 3px solid white;
 }
 h3 {
   display: inline-block;
@@ -193,72 +198,45 @@ h3:after {
 </style>
 
 <ul>
-  <li><a style="font-size: 18px;" class="active"> <i class="fa fa-dashboard fa-2x"> </i> Dashboard</a></li>
+  <li><a style="font-size: 18px;" class="active" href="/general"> <i class="fa fa-dashboard fa-2x"> </i> Dashboard</a></li>
 
-  <li><a style="font-size: 20px;" class="teacher" href="/teacher"><i class='fa fa-address-book ' ></i> Teacher</a></li>
+  <li><a style="font-size: 20px;" class="teacher" href="/teacher"><i class='fa fa-address-book '></i> Teacher</a></li>
 
-  <li><a style="font-size: 20px;" class="student" href="/student"><i class='fa fa-id-badge' ></i> Student</a></li>
+  <li><a style="font-size: 20px;" class="view"><i class='fa fa-pencil-square-o' ></i> View Question </a></li>
 
-  <li><a style="font-size: 20px;" class="statistics" href="/statistics"><i class='fa fa-newspaper-o' ></i> Stats</a></li>
-
-  <li><a style="font-size: 20px;" class="report" href="/"><i class='fa fa-sign-out'></i> Log-out</a></li>
+  <li><a style="font-size: 20px;" class="logout" href="/"><i class='fa fa-sign-out'></i> Log-out</a></li>
 </ul>
 
 <div style="margin-left:25%;padding:1px 16px;height:100px;" >
 </div>
-
-
 
 <div class="center"></div>
 <div class="cen">
 <h3 style="color:white" > ∾ • Student Tracker online Mcq Test.</h3>
 </div>
 
-<div class="about">
-    <p>* We have received your registration for the Student Academic Program – Thank You .
-        <br>
-        <br>
 
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Questions</th>
+            <th>Points</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for i in range(length) %}
+        <tr class="active-row">
+            <td>{{questions[i]}} </td>
+            <td>5M</td>
+            <td><i   class="fa fa-trash fa-2x"></i> </td>
+        </tr>
+        {% endfor %}
+        
+        <!-- and so on... -->
+    </tbody>
+</table>
 
- * In order to ensure the full Datathon experience, participants must join the Academic Program.
-          <br>
-          <br>
- *  If you are not already a member, you can sign up here.
-    Submissions are due no later than April 8, 2022.
-        <br>
-        <br>
- * Important links::
-        <br>
-        <br>
-•	Toolkit (provides a downloadable kit with details about the challenge, submission instructions, presentation template).
-        <br>
-        <br>
-•	Datathon Discussion Group (sign in with your Qlik Account to post comments and questions about the Datathon and challenges, receive additional information, and more).
-       <br>
-       <br>
-* We thank you for joining Qlik and the United Nations to build solutions to address climate issues currently facing our planet!
-       <br>
-       <br>
-        <label>
-      <input type="checkbox" checked="checked" name="checkbox">confirmation required.
-             <br>
-             <br>
-            <a style="font-size: 20px;" class="student" href="/student"><i class='fa fa-check ' ></i> Accept</a>
-            - the terms and conditions required to attend the student tracker Mcq Test.
-    </label>
-</p><br>
-
-</div>
-
-<div class="centen"></div>
-<div class="bottom">
-    <h> Ⓒ Copyright 1999-2022 by ST Data. ® All Rights Reserved..
-        <br>
-        <br>
-           ∾ • Student Tracker Mcq System Test is Powered by ST 💗 .</h>
-</div>
 </body>
 </html>
-
-
 

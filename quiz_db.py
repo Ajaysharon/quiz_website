@@ -12,10 +12,16 @@ def execute_query(sql_query):
         db.commit()
     return result
 
-'''sql_query="""select * from quiz_table"""
+
+'''query="""DELETE FROM quiz_table WHERE crtop='option 1' or crtop='option 2'"""
+execute_query(query)'''
+
+
+
+sql_query="""select * from quiz_table"""
 RESULT=execute_query(sql_query)
 print(RESULT.fetchall())
-'''
+
 
 
 '''sql_query="""create table quiz_table(question text unique,op1 text,op2 text,op3 text,crtop text)"""
@@ -23,7 +29,7 @@ execute_query(sql_query)
 sql_query="""INSERT INTO quiz_table VALUES('this is which question','1st','2nd','3rd','3')"""
 execute_query(sql_query)'''
 
-sql_query="""select * from quiz_table"""
+'''sql_query="""select * from quiz_table"""
 RESULT=execute_query(sql_query)
 l=RESULT.fetchall()
 questions_list=[]
@@ -42,4 +48,4 @@ for i in l:
 print(questions_list)
 print(option1_list)
 print(option2_list)
-print(option3_list)
+print(option3_list)'''

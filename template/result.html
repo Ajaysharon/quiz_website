@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-	<title>Student Details</title>
+	<title>Result</title>
 </head>
 <body>
 
@@ -110,12 +110,12 @@ button {
   left:590px;
   }
 
-    li a.student {
+    li a.result {
   background-color: #04AA6D;
   color: white;
 }
 
-li a:hover:not(.student) {
+li a:hover:not(.result) {
   background-color: #555;
   color: white;
 }
@@ -159,13 +159,13 @@ li a:hover:not(.student) {
 }
 
 .flip-card-front {
-  background-color:#ff6e7f;
-  color: white;
-  border-radius:14px;
+  background-color:skyblue;
+  color: black;
+   border-radius:14px;
 }
 
 .flip-card-back {
-  background-color: #CC95C0;
+  background-color: #2980b9;
   color: white;
   transform: rotateY(180deg);
    border-radius:14px;
@@ -260,11 +260,9 @@ h3:after {
 <ul>
    <li><a style="font-size: 18px;" class="active" href="/general"> <i class="fa fa-dashboard fa-2x"> </i> Dashboard</a></li>
 
-   <li><a style="font-size: 20px;" class="student" ><i class='fa fa-id-badge' ></i> Student</a></li>
+   <li><a style="font-size: 20px;" class="student" href="/student" ><i class='fa fa-id-badge' ></i> Student</a></li>
 
-   <li><a style="font-size: 20px;" class="start" href="/start"><i class='fa fa-edit'></i> Test</a></li>
-
-   <li><a style="font-size: 20px;" class="result" href="/result"><i class='fa fa-file-text'></i> Result</a></li>
+   <li><a style="font-size: 20px;" class="result" ><i class='fa fa-file-text'></i> Result</a></li>
 
    <li><a style="font-size: 20px;" class="report" href="/"><i class='fa fa-sign-out'></i> Log-out</a></li>
 </ul>
@@ -283,13 +281,12 @@ h3:after {
 <div class="flip-card">
   <div class="flip-card-inner">
     <div class="flip-card-front">
-      <h1 style="font-size:45px"><i class='fa fa-id-badge fa-4x' style='color:white'></i><br> Student.</h1>
+      <h1 style="font-size:45px"><i class='fa fa-id-badge fa-4x' style='color:black'></i><br> Student.</h1>
     </div>
     <div class="flip-card-back">
       <p style="font-size:25px">  <br>Student Name : Toby</p>
-      <p style="font-size:25px">Roll / Reg No : 20ad00</p>
-      <p style="font-size:25px">DOB : 10 / 12 / 2002</p>
-      <p style="font-size:25px">Age : 19</p>
+      <p style="font-size:25px">Roll/Reg No : 20ad00</p>
+      <p style="font-size:25px">Total Mark - 15 / 15</p>
     </div>
   </div>
 </div>
@@ -297,7 +294,7 @@ h3:after {
 <div class="flip-card1">
   <div class="flip-card-inner1">
     <div class="flip-card-front1">
-      <h1 style="font-size:42px"><i class='fa fa-question-circle-o fa-3x' style='color:white'></i> <br> Total Questions 15 </h1>
+      <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> PASS </h1>
 
     </div>
   </div>
