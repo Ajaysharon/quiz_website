@@ -286,7 +286,7 @@ h3:after {
     <div class="flip-card-back">
       <p style="font-size:25px">  <br>Student Name : Toby</p>
       <p style="font-size:25px">Roll/Reg No : 20ad00</p>
-      <p style="font-size:25px">Total Mark - 15 / 15</p>
+      <p style="font-size:25px">Total Mark - {{score}} / {{out_off}}</p>
     </div>
   </div>
 </div>
@@ -294,7 +294,12 @@ h3:after {
 <div class="flip-card1">
   <div class="flip-card-inner1">
     <div class="flip-card-front1">
-      <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> PASS </h1>
+      {% if score > (0.35*out_off) %}
+        <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> PASS </h1>
+      {% endif %}
+      {% if score < (0.35*out_off) %}
+        <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> FAIL </h1>
+      {% endif %}
 
     </div>
   </div>

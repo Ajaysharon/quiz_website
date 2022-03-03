@@ -401,7 +401,7 @@ window.onclick = function(event) {
     <h2>Question - {{i+1}}</h2>
     <div class="w3-card-4">
       <header class="w3-container w3-blue">
-        <h1>Topic - General knowledge.</h1>
+        <h1>Topic - {{sub_topic_list[i]}}</h1>
       </header> 
       <div class="w3-container">
         <p>{{questions_list[i]}}</p>
@@ -420,7 +420,8 @@ window.onclick = function(event) {
   {% endfor %}
   
     <p class="times">
-      <input type="submit" value="Submit">
+      <a><input type="submit" value="Submit"></a>
+       
   </p>
   </form>
 

@@ -179,18 +179,21 @@ h3:after {
 
 </style>
  <h3> Current time in Coordinated Universal Time (UTC) {{ utc_dt }}</h3>
+
 	<div class="container" id="container">
 		<div class="form-container log-in-container">
-			<form action="#">
+			<form method="post" action="/">
 				<h1>Teacher / Student Login</h1>
 				<input type="number" placeholder="Mobile Number" />
 				<input type="password" placeholder="Password" />
 				<span>or use your gmail account</span>
-				<input type="email" placeholder="Email" />
-				<input type="password" placeholder="Password" />
-				<button> <a href="/general" >Login </a> </button>
+				<input type="text" placeholder="Email" name="regno"/>
+				<input type="password" placeholder="Password" name="psw" />
+				<input type="submit" value="Login">
 			</form>
+			
 		</div>
+		
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel overlay-right">
