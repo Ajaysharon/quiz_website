@@ -87,7 +87,7 @@ def teacher():
 @app.route("/result")
 def result():
     out_off=get_table_details("get_length")
-    return render_template("result.html",score=score,out_off=out_off)
+    return render_template("result.html",score=score,out_off=out_off,regno=regno)
 
 @app.route("/statistics")
 def statistics():
