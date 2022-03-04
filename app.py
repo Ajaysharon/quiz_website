@@ -1,13 +1,18 @@
+from atexit import register
 from distutils.log import debug
+from sre_constants import SUCCESS
 from flask import Flask, render_template,request
 import datetime
 import sqlite3
 
+from sklearn.metrics import accuracy_score
+
 
 app = Flask(__name__, template_folder='template', static_folder='static')
 
-score=0
 sel_option=[]
+score=0
+l=0
 def execute_query(sql_query):
     with sqlite3.connect('quiz.db') as db:
         csr=db.cursor()
@@ -15,31 +20,71 @@ def execute_query(sql_query):
         db.commit()
     return result
 
-def get_table_details(options):
-    sql_query="""select * from quiz_table"""
+def get_table_details(options,query='',table=""):
+    if table =='questions':
+        sql_query=query
+    elif table=='score':
+        sql_query=query
+    else:
+        sql_query="select * from "+table
     RESULT=execute_query(sql_query)
     l=RESULT.fetchall()
-    questions_list=[]
-    sub_topic_list=[]
-    option1_list=[]
-    option2_list=[]
-    option3_list=[]
-    crt_option=[]
+    if table=='score':
+        register_number=[]
+        final_score=[]
+        academic_score=[]
+        sports_score=[]
+        co_curricular_score=[]
+        programming_score=[]
+        status=[]
+        interest=[]
+
+    else:
+        class_list=[]
+        questions_list=[]
+        sub_topic_list=[]
+        option1_list=[]
+        option2_list=[]
+        option3_list=[]
+        crt_option=[]
+    if table=='questions':
+        for i in l:   
+            class_list.append(i[0])
+            questions_list.append(i[1])
+            sub_topic_list.append(i[2])
+            option1_list.append(i[3])
+            option2_list.append(i[4])
+            option3_list.append(i[5])
+            crt_option.append(i[6])
+    if table=='score':
+        for i in l:
+            register_number.append(i[0])
+            final_score.append(i[1])
+            academic_score.append(i[2])
+            sports_score.append(i[3])
+            co_curricular_score.append(i[4])
+            programming_score.append(i[5])
+            status.append(i[6])
+            interest.append(i[7])
+    else:
     
-    for i in l:   
-        questions_list.append(i[0])
-        sub_topic_list.append(i[1])
-        option1_list.append(i[2])
-        option2_list.append(i[3])
-        option3_list.append(i[4])
-        crt_option.append(i[5])
-        length=len(questions_list)
+        for i in l:   
+            questions_list.append(i[0])
+            sub_topic_list.append(i[1])
+            option1_list.append(i[2])
+            option2_list.append(i[3])
+            option3_list.append(i[4])
+            crt_option.append(i[5])
+    length=len(l)
     if options=='get_length':
         return length
     if options=='get_questions':
         return questions_list
     elif options=='get_details':
-        return questions_list,sub_topic_list,option1_list,option2_list,option3_list,crt_option,length 
+        if table=='score':
+            return register_number,final_score,academic_score,sports_score,co_curricular_score,programming_score,status,interest
+        else:
+            return questions_list,sub_topic_list,option1_list,option2_list,option3_list,crt_option,length 
 
 
 @app.route("/",methods=["POST", "GET"])
@@ -72,11 +117,29 @@ def gen_details():
 
 @app.route("/student")
 def student():
-    print(regno)
-    return render_template("student.html",regno=regno)
+    cls=regno[2:4]
+    query="select * from questions where class='"+cls+"'"
+    l=execute_query(query)
+    l=l.fetchall()
+    return render_template("student.html",regno=regno,questions=len(l))
 
 @app.route("/start")
 def start():
+    query='select regno from score'
+    l=execute_query(query)
+    l=l.fetchall()
+
+    cls=regno[2:4]
+    query="select * from questions where class='"+cls+"'"
+    result=execute_query(query)
+    result=result.fetchall()
+
+    if len(result)==0:
+        return render_template("student.html",regno=regno,questions=0)
+    for i in range(len(l)):
+        if regno==l[i][0]:
+            return render_template("student.html",regno=regno,questions=0)
+
     return render_template("start.html")
 
 @app.route("/teacher")
@@ -86,8 +149,9 @@ def teacher():
 
 @app.route("/result")
 def result():
-    out_off=get_table_details("get_length")
-    return render_template("result.html",score=score,out_off=out_off,regno=regno)
+    query="select * from score where regno='"+regno+"'"
+    reg,score,ac,sc,cc,pc,status,interest=get_table_details('get_details',query,'score')
+    return render_template("result.html",score=score,regno=reg,academic_score=ac,sport_score=sc,co_curricular_score=cc,programming_score=pc,status=status)
 
 @app.route("/statistics")
 def statistics():
@@ -113,25 +177,61 @@ def question():
 
 @app.route("/report")
 def report():
-    return render_template("report.html")
+    query="select * from score"
+    reg,sor,aca,sport,co_curr,prog,status,interest=get_table_details('get_details',query,'score')
+    length=len(reg)
+    print(reg)
+    print(sor)
+    return render_template("report.html",register_number=reg,
+                    score=sor,
+                    academic=aca,
+                    sport=sport,
+                    co_curricular=co_curr,
+                    programming=prog,
+                    status=status,
+                    length=length,
+                    interest=interest
+                    )
 
-@app.route("/view")
+@app.route("/view",methods=['GET','POST'])
 def view():
-    questions=get_table_details("get_questions")[::-1]
-    length=len(questions)
-    
-    return render_template("view question.html",length=length,questions=questions)
+    if request.method=='GET':
+        global message
+        questions=get_table_details("get_questions",'noquery',"quiz_table")[::-1]
+        length=len(questions)
+        return render_template("view question.html",length=length,questions=questions)
+    else:
+        row=request.form['index']
+        standard=request.form['class']
+        questions=get_table_details("get_questions",'noquery',"quiz_table")[::-1]
+        length=len(questions)
+        
+        
+        '''query="DELETE FROM quiz_table WHERE question='"+questions[int(row)]+"'"
+        execute_query(query)'''
+
+        q,st,op1,op2,op3,crtop,l=get_table_details("get_details",'noquery',"quiz_table")      
+        for i in range(l):  
+            sql_query="insert into questions values('"+standard+"','"+q[i]+"','"+st[i]+"','"+op1[i]+"','"+op2[i]+"','"+op3[i]+"','"+crtop[i]+"')"
+            execute_query(sql_query)
+        sql_query="delete from quiz_table"
+        execute_query(sql_query)
+        
+        message=True
+        return render_template("view question.html",length=length,questions=questions)
 
 
 @app.route("/mcq",methods=["POST", "GET"])
 def mcq():
     print("g")
-    global sel_option
-    q,st,op1,op2,op3,crtop,l=get_table_details("get_details")
-    
+    global sel_option,score
 
     if request.method == "GET":
         print("a_mcq")
+        current_class=regno[2:4]
+        query="select * from questions where class='"+current_class+"'"
+        q,st,op1,op2,op3,crtop,l=get_table_details('get_details',query,table='questions')
+
         return render_template("mcq.html",
         questions_list=q,
         sub_topic_list=st,
@@ -142,22 +242,92 @@ def mcq():
         )
     else:
         print("b_mcq")
-        global score
         score=0
+        current_class=regno[2:4]
+        query="select * from questions where class='"+current_class+"'"
+        q,st,op1,op2,op3,crtop,l=get_table_details('get_details',query,table='questions')
         for i in range(l):
             selected_option= request.form[''+str(i)+'']
             sel_option.append(selected_option)
-
-        for i in range(l):
-            if sel_option[i]==crtop[i]:
+            if selected_option==crtop[i]:
                 score+=1
 
         print(sel_option)
         print(crtop)
         print("YOUR SCORE :",score,"/",len(q))
+        out_off=get_table_details("get_length",'noquery','quiz_table')
+        academics_score,sports_score,co_curricular_score,programming_score=0,0,0,0
+        academics_question,sports_question,co_curricular_question,programming_question=0,0,0,0
+
+        for i in range(len(sel_option)):
+            if st[i]=='Academics':
+                academics_question+=1
+                if sel_option[i]==crtop[i]:
+                    academics_score+=1
+            elif st[i]=='Sports':
+                sports_question+=1
+                if sel_option[i]==crtop[i]:
+                    sports_score+=1
+            elif st[i]=='Co-Curricular':
+                co_curricular_question+=1
+                if sel_option[i]==crtop[i]:
+                    co_curricular_score+=1
+            elif st[i]=='Programming':
+                programming_question+=1
+                if sel_option[i]==crtop[i]:
+                    programming_score+=1
+        if score>=0.35*len(sel_option):
+            status='PASS'
+        else:
+            status='FAIL'
+        
+        l=[]
+        if academics_question==0:
+            l.append(0)
+        else:
+            l.append(academics_score/academics_question)
+        if sports_question==0:
+            l.append(0)
+        else:
+            l.append(sports_score/sports_question)
+
+        if co_curricular_question==0:
+            l.append(0)
+        else:
+            l.append(co_curricular_score/co_curricular_question)
+        if programming_question==0:
+            l.append(0)
+        else:
+            l.append(programming_score/programming_question)
+
+        maximum=max(l)
+        interest_index=[]
+        interest=''
+        for i in range(len(l)):
+            if l[i]==maximum:
+                interest_index.append(i)
+        for j in interest_index:
+            if len(interest_index)>0 and len(interest_index)<4:
+                if j==0:
+                    interest+='Academic '
+                if j==1:
+                    interest+='Sports '
+                if j==2:
+                    interest+='Co_Curricular '
+                if j==3:
+                    interest+='Programming '
+
+            elif len(interest_index)==4:
+                interest="All Rounder"
+                break
+
+        out_off=academics_question+sports_question+co_curricular_question+programming_question
+        query="insert into score values('"+str(regno)+"','"+str(score)+"/"+str(out_off)+"','"+str(academics_score)+"/"+str(academics_question)+"','"+str(sports_score)+"/"+str(sports_question)+"','"+str(co_curricular_score)+"/"+str(co_curricular_question)+"','"+str(programming_score)+"/"+str(programming_question)+"','"+status+"','"+interest+"')"
+        execute_query(query)
         sel_option=[]
-        out_off=get_table_details("get_length")
-        return render_template("result.html",score=score,out_off=out_off)
+        query="select * from score where regno='"+regno+"'"
+        reg,score,ac,sc,cc,pc,status,interest=get_table_details('get_details',query,'score')
+        return render_template("result.html",score=score,regno=reg,academic_score=ac,sport_score=sc,co_curricular_score=cc,programming_score=pc,status=status)
 
 
 if __name__ == "__main__":

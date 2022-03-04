@@ -95,7 +95,7 @@ button {
   width:944px;
   position:absolute;
   top: 0px;
-  left:327px;
+  left:333px;
   border: 2px solid white;
   background:#696969;
 
@@ -151,9 +151,10 @@ li a:hover:not(.result) {
 
 .flip-card-front, .flip-card-back {
   position: absolute;
-   border-radius:14px;
+  top:-60px;
+  border-radius:14px;
   width: 100%;
-  height: 100%;
+  height: 170%;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -281,12 +282,16 @@ h3:after {
 <div class="flip-card">
   <div class="flip-card-inner">
     <div class="flip-card-front">
-      <h1 style="font-size:45px"><i class='fa fa-id-badge fa-4x' style='color:black'></i><br> Student.</h1>
+      <h1 style="font-size:50px"><i class='fa fa-id-badge fa-4x' style='color:black'></i><br> Student's Test<br> Result.</h1>
     </div>
     <div class="flip-card-back">
-      <p style="font-size:25px">  <br>Student Name : Toby</p>
-      <p style="font-size:25px">Roll/Reg No : {{regno}}</p>
-      <p style="font-size:25px">Total Mark - {{score}} / {{out_off}}</p>
+      <p style="font-size:25px">Student Name : Toby</p>
+      <p style="font-size:25px">Roll/Reg No :{{regno.0}}</p>
+      <p style="font-size:25px">Academics - {{academic_score.0}}</p>
+      <p style="font-size:25px">Sports - {{sport_score.0}}</p>
+      <p style="font-size:25px">Co-Curricular - {{co_curricular_score.0}}</p>
+      <p style="font-size:25px">Programming - {{programming_score.0}}</p>
+      <p style="font-size:25px">Total Mark - {{score.0}}</p>
     </div>
   </div>
 </div>
@@ -294,12 +299,7 @@ h3:after {
 <div class="flip-card1">
   <div class="flip-card-inner1">
     <div class="flip-card-front1">
-      {% if score > (0.35*out_off) %}
-        <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> PASS </h1>
-      {% endif %}
-      {% if score < (0.35*out_off) %}
-        <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> FAIL </h1>
-      {% endif %}
+      <h1 style="font-size:42px"><i class='fa fa-check-square-o fa-4x'></i> <br> {{status.0}} </h1>
 
     </div>
   </div>

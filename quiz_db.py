@@ -13,15 +13,21 @@ def execute_query(sql_query):
     return result
 
 
+'''query="select * from questions where class=07"
+execute_query(query)'''
 
-'''sql_query="""create table score(regno text ,topic text,score text)"""
+'''query="""drop table score"""
+execute_query(query)'''
+
+
+'''sql_query="""create table score(regno text,score text,academics text,sports text,co_curricular text,programming text,status text,interest text)"""
 execute_query(sql_query)'''
 
 '''query="""DELETE FROM quiz_table WHERE crtop='option 1' or crtop='option 2'"""
 execute_query(query)'''
 
 
-'''sql_query="""create table questions(class text,question_topic text,sub_topic text,question text,op1 text,op2 text,op3 text,crtop text)"""
+'''sql_query="""create table questions(class text,sub_topic text,question text,op1 text,op2 text,op3 text,crtop text)"""
 execute_query(sql_query)'''
 
 
@@ -65,6 +71,9 @@ print(option3_list)'''
 
 
 
-sql_query="""select * from score"""
+sql_query="select regno from score"
 RESULT=execute_query(sql_query)
 print(RESULT.fetchall())
+
+
+

@@ -7,110 +7,6 @@
 <body>
 
 <style>
-@import 'https://fonts.googleapis.com/css?family=Open+Sans:600,700';
-
-* {font-family: 'Open Sans', sans-serif;}
-
-.rwd-table {
-  margin: auto;
-  min-width: 300px;
-  max-width: 100%;
-  border-collapse: collapse;
-}
-
-.rwd-table tr:first-child {
-  border-top: none;
-  background: #02AAB0;
-  color: #fff;
-}
-
-.rwd-table tr {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  background-color: #f5f9fc;
-}
-
-.rwd-table tr:nth-child(odd):not(:first-child) {
-  background-color: #ebf3f9;
-}
-
-.rwd-table th {
-  display: none;
-}
-
-.rwd-table td {
-  display: block;
-}
-
-.rwd-table td:first-child {
-  margin-top: .5em;
-}
-
-.rwd-table td:last-child {
-  margin-bottom: .5em;
-}
-
-.rwd-table td:before {
-  content: attr(data-th) ": ";
-  font-weight: bold;
-  width: 120px;
-  display: inline-block;
-  color: #000;
-}
-
-.rwd-table th,
-.rwd-table td {
-  text-align: left;
-}
-
-.rwd-table {
-  color: #333;
-  border-radius: .4em;
-  overflow: hidden;
-}
-
-.rwd-table tr {
-  border-color: #bfbfbf;
-}
-
-.rwd-table th,
-.rwd-table td {
-  padding: .5em 1em;
-}
-@media screen and (max-width: 601px) {
-  .rwd-table tr:nth-child(2) {
-    border-top: none;
-  }
-}
-@media screen and (min-width: 600px) {
-  .rwd-table tr:hover:not(:first-child) {
-    background-color: #d8e7f3;
-  }
-  .rwd-table td:before {
-    display: none;
-  }
-  .rwd-table th,
-  .rwd-table td {
-    display: table-cell;
-    padding: .25em .5em;
-  }
-  .rwd-table th:first-child,
-  .rwd-table td:first-child {
-    padding-left: 0;
-  }
-  .rwd-table th:last-child,
-  .rwd-table td:last-child {
-    padding-right: 0;
-  }
-  .rwd-table th,
-  .rwd-table td {
-    padding: 1em !important;
-  }
-}
-
-
-/* THE END OF THE IMPORTANT STUFF */
-
 /* Basic Styling */
 body {
 background: #02AAB0;  /* fallback for old browsers */
@@ -129,9 +25,9 @@ h1 {
 h3 {
   display: inline-block;
   position: relative;
-  text-align: center;
   font-size: 1.5em;
   color: black;
+  left:460px;
 }
 h3:before {
   content: "\25C0";
@@ -159,107 +55,59 @@ h3:after {
   75%   { transform: translateX(10px)}
   100%  { transform: translateX(0)}
 }
+table {
+  width: 100%;
+  border-radius:6px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-radius:6px;
+}
+
+tr {
+background-color:white ;
+border-radius:6px;
+}
 </style>
 
-
-<div class="container">
-<h1>Student Report Table</h1>
-  <table class="rwd-table">
-    <tbody>
-      <tr>
-        <th>Student Name</th>
-        <th>Roll/Reg No</th>
-        <th>Date of Birth</th>
-        <th>Marks</th>
-        <th>Test Status</th>
-      </tr>
-      <tr>
-        <td data-th="Student Name">
-          Gustavo Green
-        </td>
-        <td data-th="Roll/Reg No">
-          20WDA001
-        </td>
-        <td data-th="DOB">
-          12/08/2000
-        </td>
-        <td data-th="Marks">
-          15/15
-        </td>
-        <td data-th="Test Status">
-          Passed
-        </td>
-<tr>
-        <td data-th="Student Name">
-          Kyra Leon
-        </td>
-        <td data-th="Roll/Reg No">
-          20WDA002
-        </td>
-         <td data-th="DOB">
-          22/09/2000
-        </td>
-        <td data-th="Marks">
-          14/15
-        </td>
-        <td data-th="Test Status">
-          Passed
-        </td>
-
+<h1>Student's Report Table</h1>
+<div style="overflow-x: auto;">
+  <table>
     <tr>
-        <td data-th="Student Name">
-          Edwin Marlow
-        </td>
-        <td data-th="Roll/Reg No">
-          20WDA003
-        </td>
-         <td data-th="DOB">
-          12/01/2001
-        </td>
-        <td data-th="Marks">
-          09/15
-        </td>
-        <td data-th="Test Status">
-          Failed
-        </td>
-
+      <th>Serial No.</th>
+      <th>Student Name.</th>
+      <th>Roll/Reg No.</th>
+      <th>Date of Birth.</th>
+      <th>Overall Marks.</th>
+      <th>Marks scored in Academics.</th>
+      <th>Marks scored in Sports.</th>
+      <th>Marks scored in Co-Curricular.</th>
+      <th>Marks scored in Programming.</th>
+      <th>Student field of Interest.</th>
+      <th>Test Status.</th>
+    </tr>
+    {% for i in range(length) %}
     <tr>
-        <td data-th="Student Name">
-          Shameer Khan
-        </td>
-        <td data-th="Roll/Reg No">
-          20WDA004
-        </td>
-         <td data-th="DOB">
-          02/02/2002
-        </td>
-        <td data-th="Marks">
-          11/15
-        </td>
-        <td data-th="Test Status">
-          Passed
-        </td>
-
-    <tr>
-        <td data-th="Student Name">
-         Gaby Smith
-        </td>
-        <td data-th="Roll/Reg No">
-          20WDA005
-        </td>
-         <td data-th="DOB">
-          30/01/2001
-        </td>
-        <td data-th="Marks">
-          15/15
-        </td>
-        <td data-th="Test Status">
-          Passed
-        </td>
-    </tbody>
+      <td>{{i+1}}</td>
+      <td>Gustavo Green</td>
+      <td>{{register_number[i]}}</td>
+      <td>12/08/2000</td>
+      <td>{{score[i]}}</td>
+      <td>{{academic[i]}}</td>
+      <td>{{sport[i]}}</td>
+      <td>{{co_curricular[i]}}</td>
+      <td>{{programming[i]}}</td>
+      <td>{{interest[i]}}</td>
+      <td>{{status[i]}}</td>
+    </tr>
+    {% endfor %}
   </table>
-
-  <h3> ∾ • Student Tracker online Mcq Test.</h3>
+      <h3> ∾ • Student Tracker online Mcq Test.</h3>
 </div>
+
 </body>
 </html>
+
+
