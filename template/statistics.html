@@ -19,11 +19,11 @@ google.charts.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
   ['Task','Students field of Interest'],
-  ['Academics', 14],
-  ['Sports', 18],
-  ['Co-Curricular', 10],
-  ['Programming', 8],
-  ['Others', 4]
+  ['Academics', {{academic}}],
+  ['Sports', {{sport}}],
+  ['Co-Curricular', {{co_curricular}}],
+  ['Programming', {{programming}}],
+  ['Others', {{other}}]
 ]);
 
   // Optional; add a title and set the width and height of the chart

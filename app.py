@@ -155,7 +155,24 @@ def result():
 
 @app.route("/statistics")
 def statistics():
-    return render_template("statistics.html")
+    query="select interest from score"
+    l=execute_query(query)
+    l=l.fetchall()
+    ac,sp,co,pr,ot=0,0,0,0,0
+    for i in l:
+        print(i,":")
+        if i[0]=='Academic ':
+            ac+=1
+        elif i[0]=='Sports ':
+            sp+=1
+        elif i[0]=='Co_Curricular ':
+            co+=1
+        elif i[0]=='Programming ':
+            pr+=1
+        else:
+            ot+=1
+
+    return render_template("statistics.html",academic=ac,sport=sp,co_curricular=co,programming=pr,other=ot)
 
 @app.route("/question",methods=["POST", "GET"]) 
 def question():
