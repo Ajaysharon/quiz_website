@@ -23,8 +23,8 @@ execute_query(query)'''
 '''sql_query="""create table score(regno text,score text,academics text,sports text,co_curricular text,programming text,status text,interest text)"""
 execute_query(sql_query)'''
 
-query="""delete from score where regno='2207B01'"""
-execute_query(query)
+'''query="""delete from score where regno='2207B01'"""
+execute_query(query)'''
 
 '''query="""DELETE FROM quiz_table WHERE crtop='option 1' or crtop='option 2'"""
 execute_query(query)'''
@@ -74,9 +74,10 @@ print(option3_list)'''
 
 
 
-sql_query="select * from score"
+sql_query="select * from questions"
 RESULT=execute_query(sql_query)
 print(RESULT.fetchall())
+
 
 
 
